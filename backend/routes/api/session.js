@@ -13,6 +13,7 @@ router.post('/', async (req, res, next) => {
 
     const user = await User.unscoped().findOne({
         where: {
+            // either by username or email
           [Op.or]: {
             username: credential,
             email: credential
@@ -40,6 +41,12 @@ router.post('/', async (req, res, next) => {
         user: safeUser
       });
 
-})
+});
+
+// log out --> remove token cookie from the response and return message
+router.delete('/', (_req, res) => {
+    res.clearCookie('token');
+    return res.json({ message: 'success' });
+});
 
 module.exports = router;
