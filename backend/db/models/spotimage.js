@@ -6,18 +6,18 @@ module.exports = (sequelize, DataTypes) => {
   class SpotImage extends Model {
     static associate(models) {
       SpotImage.belongsTo(models.Spot, {
-        foreignKey: 'spotId'
+        foreignKey: 'spotId',
       })
     }
   }
   SpotImage.init({
     spotId: {
       type: DataTypes.INTEGER,
-      allowNull:false
+      allowNull:false,
     },
     url: {
       type: DataTypes.STRING,
-      allowNull:false
+      allowNull:false,
     },
     preview: {
       type: DataTypes.BOOLEAN,
