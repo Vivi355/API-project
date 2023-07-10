@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
             avgRating += review.stars;
         });
         if (totalReview > 0) {
-            avgRating / totalReview;
+            avgRating /= totalReview;
         }
         spot.avgRating = avgRating;
         delete spot.Reviews;
