@@ -66,8 +66,8 @@ router.get('/', async (req, res) => {
        ]
     });
 
-    const allSpots = updatedSpot(spots)
-    return res.json(allSpots)
+    const Spots = updatedSpot(spots)
+    return res.json({Spots})
 });
 
 // get all spots owned by the Current user
@@ -82,8 +82,8 @@ router.get('/current', requireAuth, async (req, res) => {
             ownerId: ownerId
            }
     })
-    const ownerSpots = updatedSpot(spots)
-    return res.json(ownerSpots)
+    const Spots = updatedSpot(spots)
+    return res.json({Spots})
 });
 
 // get details of a spot from an id
