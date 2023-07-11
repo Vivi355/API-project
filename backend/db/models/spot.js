@@ -30,108 +30,42 @@ module.exports = (sequelize, DataTypes) => {
     address: {
       type: DataTypes.STRING,
       allowNull:false,
-      unique: true,
-      validate: {
-        notEmpty: {
-          args: true,
-          msg: 'Street address is required'
-        }
-      }
+      unique: true
     },
     city: {
       type: DataTypes.STRING,
-      allowNull:false,
-      validate: {
-        notEmpty: {
-          args: true,
-          msg: 'City is required'
-        },
-        titleCased(value) {
-          const words = value.split(' ');
-          for (let word of words) {
-            if (word[0] !== word[0].toUpperCase()) {
-              throw new Error('Must be title cased');
-            }
-          }
-        }
-      }
+      allowNull:false
     },
     state: {
       type: DataTypes.STRING,
-      allowNull:false,
-      validate: {
-        notEmpty: {
-          args: true,
-          msg: 'State is required'
-        }
-      }
+      allowNull:false
     },
     country: {
       type: DataTypes.STRING,
-      allowNull:false,
-      validate: {
-        notEmpty: {
-          args: true,
-          msg: 'Country is required'
-        }
-      }
+      allowNull:false
     },
     lat: {
       type: DataTypes.DECIMAL,
-      allowNull:false,
-      validate: {
-        isDecimal: {
-          args: true,
-          msg: 'Latitude is not valid'
-        },
-        min: -90,
-        max: 90
-      }
+      allowNull:false
     },
     lng: {
       type: DataTypes.DECIMAL,
-      allowNull:false,
-      validate: {
-        isDecimal: {
-          args: true,
-          msg: 'Longitude is not valid'
-        },
-        min: -180,
-        max: 180
-      }
+      allowNull:false
     },
     name: {
       type: DataTypes.STRING,
-      allowNull:false,
-      validate: {
-        len: [1, 50],
-        isGreaterThan(value) {
-          if (value.length > 50) {
-            throw new Error('Name must be less than 50 characters')
-          }
-        }
-      }
+      allowNull:false
     },
     description: {
       type: DataTypes.STRING,
-      allowNull:false,
-      validate: {
-        notEmpty: {
-          args: true,
-          msg: 'Description is required'
-        }
-      }
+      allowNull:false
     },
     price: {
       type: DataTypes.DECIMAL,
       allowNull:false,
       validate: {
         isDecimal: true,
-        min: 0,
-        notEmpty: {
-          args: true,
-          msg: 'Price per day is required'
-        }
+        min: 0
       }
     }
   }, {
