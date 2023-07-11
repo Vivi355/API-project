@@ -33,7 +33,6 @@ function updatedSpot(spots) {
     let previewImage = null;
     let hasPreview = false; // set the preview to false
 
-
     spotData.SpotImages.forEach(image => {
         if (image.preview === true) {
           previewImage = image.url;
@@ -53,7 +52,7 @@ function updatedSpot(spots) {
     return spotList;
   };
 
-  ////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////// check validation when create or edit spot
   const validateCreateSpot = [
     check('address')
         .exists({checkFalsy: true})
@@ -99,6 +98,18 @@ function updatedSpot(spots) {
         .withMessage('Price per day is required'),
         handleValidationErrors
 ];
+
+const validateReview = [
+    check('review')
+        .exists({checkFalsy: true})
+        .notEmpty()
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({checkFalsy:true})
+        .isInt({min: 1, max: 5})
+        .withMessage('Stars must be an integer from 1 to 5'),
+        handleValidationErrors
+]
 
   /////////////////////////////////////////////////////////
 // get all spots
@@ -154,6 +165,45 @@ router.post('/:spotId/images', requireAuth, async(req, res) => {
 
     return res.json({id, url, preview});
 });
+
+//////////////////////////////////////////////////////
+// create a review for a spot based on spot id
+router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res) => {
+    // find the spot id
+    const spot = await Spot.findByPk(req.params.spotId);
+    // get user id
+    const userId = req.user.id;
+    const { review, stars} = req.body;
+
+    // check if the user has a review for the spot
+    const hasReview = await Review.findOne({
+        where: {
+            spotId: spot.id,
+            userId: userId
+        }
+    });
+    // if exist handle error
+    if(hasReview) {
+        res.status(403);
+        return res.json({"message": "User already has a review for this spot"})
+    }
+
+    // check spot exists
+    if (!spot) {
+        res.status(404);
+        return res.json({"message": "Spot couldn't be found"});
+    }
+
+    // create new review for the spot
+    const newReview = await Review.create({
+        spotId: spot.id,
+        userId,
+        review,
+        stars
+    })
+
+    return res.status(201).json(newReview);
+})
 
 ///////////////////////////////////////////////////////////////
 // edit a spot
@@ -243,9 +293,6 @@ router.get('/:spotId', async(req, res) => {
     }
 });
 /////////////////////////////////////////////////////////////////
-
-
-
 // create a spot
 router.post('/', requireAuth, validateCreateSpot, async(req, res) => {
     const {address, city, state, country, lat, lng, name, description, price} = req.body;

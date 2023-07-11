@@ -20,7 +20,7 @@ module.exports = {
         url: 'review2.jpg'
       },{
         reviewId:2,
-        url: 'review2.jpg'
+        url: 'review3.jpg'
       },
     ], { validate: true })
   },
