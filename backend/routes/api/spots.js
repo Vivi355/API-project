@@ -195,7 +195,7 @@ router.post('/', requireAuth, validateCreateSpot, async(req, res) => {
         // previewImage: false
     })
 
-    return res.json(newSpot)
+    return res.status(201).json(newSpot);
 })
 
 module.exports = router;
