@@ -31,28 +31,27 @@ function updatedSpot(spots) {
 
     // updating the preview to previewImage and set the url value
     let previewImage = null;
-    spotData.SpotImages.forEach(image => {
-      if (image.preview === true) {
-        previewImage = image.url;
-      }
+    let hasPreview = false; // set the preview to false
 
-      // if preview is false, then display msg
-      if (!image.preview) {
-        image.preview = 'No preview image found!'
-      }
+
+    spotData.SpotImages.forEach(image => {
+        if (image.preview === true) {
+          previewImage = image.url;
+          hasPreview = true; // flip to true
+        }
+      });
+
+      // check if it's true or false, true with the image url, false with msg
+      spotData.previewImage = hasPreview ? previewImage : 'No preview image found!';
+
+      delete spotData.Reviews;
+      delete spotData.SpotImages;
+
+      spotList.push(spotData);
     });
 
-    spotData.previewImage = previewImage;
-
-    // delete unnessary part
-    delete spotData.Reviews;
-    delete spotData.SpotImages;
-
-    spotList.push(spotData);
-  });
-
-  return spotList;
-}
+    return spotList;
+  }
 
 // get all spots
 router.get('/', async (req, res) => {
@@ -196,6 +195,19 @@ router.post('/', requireAuth, validateCreateSpot, async(req, res) => {
     })
 
     return res.status(201).json(newSpot);
+});
+
+// add an img to a spot based on id
+router.post('/:spotId/images', requireAuth, async(req, res) => {
+    const {url, preview} = req.body;
+    const spotId = await Spot.findByPk(req.params.spotId);
+    const newImg = await SpotImage.create({
+        spotId: spotId.id,
+        url,
+        preview
+    })
+
+    return res.json(newImg);
 })
 
 module.exports = router;
