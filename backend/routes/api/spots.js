@@ -3,7 +3,7 @@ const {requireAuth} = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-const {Spot, SpotImage, Review, User } = require('../../db/models');
+const {Spot, SpotImage, Review, User, ReviewImage } = require('../../db/models');
 
 const router = express.Router();
 
@@ -166,6 +166,32 @@ router.post('/:spotId/images', requireAuth, async(req, res) => {
     return res.json({id, url, preview});
 });
 
+////////////////////////////////////////////////////
+/////////////////////////////////////////////
+// get all reviews by a spot's id
+router.get('/:spotId/reviews', async(req, res) => {
+    // find the spot
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    // check exists
+    if (!spot) {
+        res.status(404);
+        return res.json({"message": "Spot couldn't be found"});
+    }
+
+    const Reviews = await Review.findAll({
+        include: [
+            {model: User, attributes: ['id', 'firstName', 'lastName']},
+            {model: ReviewImage}
+        ],
+        where: {
+            spotId: spot.id
+        }
+    })
+
+    return res.json({Reviews});
+})
+
 //////////////////////////////////////////////////////
 // create a review for a spot based on spot id
 router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res) => {
@@ -191,7 +217,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res) => 
     // if exist handle error
     if(hasReview) {
         res.status(403);
-        return res.json({"message": "User already has a review for this spot"})
+        return res.json({"message": "User already has a review for this spot"});
     }
 
     // create new review for the spot
@@ -204,6 +230,8 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res) => 
 
     return res.status(201).json(newReview);
 })
+
+
 
 ///////////////////////////////////////////////////////////////
 // edit a spot
@@ -246,7 +274,7 @@ router.delete('/:spotId', requireAuth, async(req, res) => {
         await spot.destroy();
     }
 
-    return res.json({"message": "Successfully deleted"})
+    return res.json({"message": "Successfully deleted"});
 
 })
 
