@@ -121,24 +121,7 @@ const validateBooking = [
     handleValidationErrors
 ]
 
-  /////////////////////////////////////////////////////////
-// get all spots
-router.get('/', async (req, res) => {
-    const spots = await Spot.findAll({
-       include: [
-        {
-            model: Review
-        },
-        {
-            model: SpotImage
-        }
-       ]
-    });
-
-    const Spots = updatedSpot(spots);
-    return res.json({Spots});
-});
-
+///////////////////////////////////////////////////
 // get all spots owned by the Current user
 router.get('/current', requireAuth, async (req, res) => {
     const ownerId = req.user.id;
@@ -355,6 +338,24 @@ router.get('/:spotId', async(req, res) => {
 
         return res.json(Spots);
     }
+});
+
+//////////////////////////////////////////////
+// get all spots
+router.get('/', async (req, res) => {
+    const spots = await Spot.findAll({
+       include: [
+        {
+            model: Review
+        },
+        {
+            model: SpotImage
+        }
+       ]
+    });
+
+    const Spots = updatedSpot(spots);
+    return res.json({Spots});
 });
 /////////////////////////////////////////////////////////////////
 // create a spot
