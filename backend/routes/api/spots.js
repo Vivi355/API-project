@@ -3,7 +3,7 @@ const {requireAuth} = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-const {Spot, SpotImage, Review, User, ReviewImage } = require('../../db/models');
+const {Spot, SpotImage, Review, User, ReviewImage, Booking } = require('../../db/models');
 
 const router = express.Router();
 
@@ -109,6 +109,16 @@ const validateReview = [
         .isInt({min: 1, max: 5})
         .withMessage('Stars must be an integer from 1 to 5'),
         handleValidationErrors
+];
+
+const validateBooking = [
+    check('startDate')
+        .exists({checkFalsy: true})
+        .notEmpty()
+        .withMessage('Must have a startDate'),
+    check('endDate')
+        .exists({checkFalsy: true}),
+    handleValidationErrors
 ]
 
   /////////////////////////////////////////////////////////
@@ -182,7 +192,7 @@ router.get('/:spotId/reviews', async(req, res) => {
     const Reviews = await Review.findAll({
         include: [
             {model: User, attributes: ['id', 'firstName', 'lastName']},
-            {model: ReviewImage}
+            {model: ReviewImage, attributes: ['id', 'id', 'url']}
         ],
         where: {
             spotId: spot.id
@@ -231,7 +241,34 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res) => 
     return res.status(201).json(newReview);
 })
 
+//////////////////////////////////////////////////
+// create a booking from a spot based on spot id
+router.post('/:spotId/bookings', requireAuth, validateBooking, async(req, res) => {
+    // find the spot
+    const spot = await Spot.findByPk(req.params.spotId);
+    // get user id
+    const userId = req.user.id;
+    const {startDate, endDate} = req.body;
 
+    // check if exists
+    if (!spot) {
+        res.status(404);
+        return res.json({"message": "Spot couldn't be found"});
+    }
+
+    // check if spot is available
+    const checkBooking = await Booking.findOne({
+        where: {
+            spotId: spot.id,
+            userId: userId
+        }
+    })
+    // handle error if exist
+    if (checkBooking) {
+        res.status(403);
+        return res.json({"message": "Sorry, this spot is already booked for the specified dates"})
+    }
+})
 
 ///////////////////////////////////////////////////////////////
 // edit a spot
@@ -275,7 +312,6 @@ router.delete('/:spotId', requireAuth, async(req, res) => {
     }
 
     return res.json({"message": "Successfully deleted"});
-
 })
 
 ///////////////////////////////////////////////////////////////
