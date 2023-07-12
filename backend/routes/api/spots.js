@@ -192,7 +192,7 @@ router.get('/:spotId/reviews', async(req, res) => {
     const Reviews = await Review.findAll({
         include: [
             {model: User, attributes: ['id', 'firstName', 'lastName']},
-            {model: ReviewImage, attributes: ['id', 'id', 'url']}
+            {model: ReviewImage, attributes: ['id', 'url']}
         ],
         where: {
             spotId: spot.id
