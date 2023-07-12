@@ -2,6 +2,7 @@ const express = require('express');
 const {requireAuth} = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const {Op} = require('sequelize')
 
 const {Spot, SpotImage, Review, User, ReviewImage, Booking } = require('../../db/models');
 
@@ -117,26 +118,21 @@ const validateBooking = [
         .notEmpty()
         .withMessage('Must have a startDate'),
     check('endDate')
-        .exists({checkFalsy: true}),
-    handleValidationErrors
-]
+        .exists({checkFalsy: true})
+        // need a custom validator to check(ref:express-validator docs)
+        .custom((value, {req}) => {
+            const startDate = new Date(req.body.startDate);
+            const endDate = new Date(value);
 
-///////////////////////////////////////////////////
-// get all spots owned by the Current user
-router.get('/current', requireAuth, async (req, res) => {
-    const ownerId = req.user.id;
-    const spots = await Spot.findAll({
-        include: [
-            {model: SpotImage},
-            {model: Review}
-        ],
-           where: {
-            ownerId: ownerId
-           }
-    })
-    const Spots = updatedSpot(spots);
-    return res.json({Spots});
-});
+            // check values
+            if (endDate <= startDate) {
+                throw new Error('endDate cannot be on or before startDate');
+            }
+            return true;
+        }),
+    handleValidationErrors
+];
+
 
 /////////////////////////////////////////////////////////////
 // add an img to a spot based on id
@@ -224,6 +220,56 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res) => 
     return res.status(201).json(newReview);
 })
 
+/////////////////////////////////////////////////////
+// get all bookings for a spot based on spot's id
+router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+    const spotId = req.params.spotId;
+    const userId = req.user.id;
+
+    const spot = await Spot.findByPk(spotId);
+
+    if (!spot) {
+      res.status(404);
+      return res.json({ "message": "Spot couldn't be found" });
+    }
+
+    // check owner
+    const isOwner = spot.ownerId === userId;
+
+    let bookings;
+
+    // if it's owner, display user
+    if (isOwner) {
+      bookings = await Booking.findAll({
+        include: [
+          { model: User, attributes: ['id', 'firstName', 'lastName'] }
+        ],
+        where: {
+          spotId: spot.id
+        }
+      });
+      // if not, exclude user
+    } else {
+      bookings = await Booking.findAll({
+        attributes: ['spotId', 'startDate', 'endDate'],
+        where: {
+          spotId: spot.id
+        }
+      });
+    }
+
+    // format the startDate and endDate (remove time)
+    const updatedBookings = bookings.map(booking => {
+      const bookingJson = booking.toJSON();
+
+      bookingJson.startDate = bookingJson.startDate.toISOString().slice(0, 10);
+      bookingJson.endDate = bookingJson.endDate.toISOString().slice(0, 10);
+      return bookingJson;
+    });
+
+    return res.json({ Bookings: updatedBookings });
+  });
+
 //////////////////////////////////////////////////
 // create a booking from a spot based on spot id
 router.post('/:spotId/bookings', requireAuth, validateBooking, async(req, res) => {
@@ -239,18 +285,59 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async(req, res) =
         return res.json({"message": "Spot couldn't be found"});
     }
 
-    // check if spot is available
+    // check if booking is available for the specific dates
     const checkBooking = await Booking.findOne({
         where: {
             spotId: spot.id,
-            userId: userId
+            // userId: userId
+            startDate: {
+                [Op.lte]: new Date(endDate) // check endDate
+            },
+            endDate: {
+                [Op.gte]: new Date(startDate) // check startDate
+            }
         }
     })
-    // handle error if exist
+    // handle error if conflicts
     if (checkBooking) {
         res.status(403);
-        return res.json({"message": "Sorry, this spot is already booked for the specified dates"})
+        return res.json({
+            "message": "Sorry, this spot is already booked for the specified dates",
+            "errors": {
+                "startDate": "Start date conflicts with an existing booking",
+                "endDate": "End date conflicts with an existing booking"
+            }
+      })
     }
+
+    // create new booking
+    const newBooking = await Booking.create({
+        spotId: spot.id,
+        userId,
+        startDate,
+        endDate
+    });
+
+    // change the format of the reponse body startDate and endDate (ex: 2023-10-19T00:00:00.00Z)
+    // const newStartDate = newBooking.startDate.toISOString().slice(0, 10);
+
+    // const newEndDate = newBooking.endDate.toISOString().slice(0, 10);;
+
+    // // reassign to the new one
+    // newBooking.startDate = newStartDate;
+    // newBooking.endDate = newEndDate;
+
+    const response = {
+        id: newBooking.id,
+        spotId: newBooking.spotId,
+        userId: newBooking.userId,
+        startDate: newBooking.startDate.toISOString().slice(0,10),
+        endDate: newBooking.endDate.toISOString().slice(0,10),
+        createdAt: newBooking.createdAt,
+        updatedAt: newBooking.updatedAt
+    }
+
+    return res.json(response);
 })
 
 ///////////////////////////////////////////////////////////////
@@ -338,6 +425,23 @@ router.get('/:spotId', async(req, res) => {
 
         return res.json(Spots);
     }
+});
+
+///////////////////////////////////////////////////
+// get all spots owned by the Current user
+router.get('/current', requireAuth, async (req, res) => {
+    const ownerId = req.user.id;
+    const spots = await Spot.findAll({
+        include: [
+            {model: SpotImage},
+            {model: Review}
+        ],
+           where: {
+            ownerId: ownerId
+           }
+    })
+    const Spots = updatedSpot(spots);
+    return res.json({Spots});
 });
 
 //////////////////////////////////////////////
