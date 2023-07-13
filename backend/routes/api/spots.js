@@ -133,6 +133,22 @@ const validateBooking = [
     handleValidationErrors
 ];
 
+///////////////////////////////////////////////////
+// get all spots owned by the Current user
+router.get('/current', requireAuth, async (req, res) => {
+    const ownerId = req.user.id;
+    const spots = await Spot.findAll({
+        include: [
+            {model: SpotImage},
+            {model: Review}
+        ],
+           where: {
+            ownerId: ownerId
+           }
+    })
+    const Spots = updatedSpot(spots);
+    return res.json({Spots});
+});
 
 /////////////////////////////////////////////////////////////
 // add an img to a spot based on id
@@ -427,26 +443,27 @@ router.get('/:spotId', async(req, res) => {
     }
 });
 
-///////////////////////////////////////////////////
-// get all spots owned by the Current user
-router.get('/current', requireAuth, async (req, res) => {
-    const ownerId = req.user.id;
-    const spots = await Spot.findAll({
-        include: [
-            {model: SpotImage},
-            {model: Review}
-        ],
-           where: {
-            ownerId: ownerId
-           }
-    })
-    const Spots = updatedSpot(spots);
-    return res.json({Spots});
-});
+
 
 //////////////////////////////////////////////
 // get all spots
 router.get('/', async (req, res) => {
+    // add pagination
+    let {page, size} = req.query;
+
+    let pagination = {};
+
+    page = parseInt(page);
+    size = parseInt(size);
+
+    if (isNaN(page) || page <= 0) page = 1;
+    if (isNaN(size) || size <= 0) size = 20;
+    if (page > 10) page = 10;
+    if (size > 20) size = 20;
+
+    pagination.limit = size;
+    pagination.offset = (page - 1) * size;
+
     const spots = await Spot.findAll({
        include: [
         {
@@ -455,11 +472,19 @@ router.get('/', async (req, res) => {
         {
             model: SpotImage
         }
-       ]
+       ],
+       ...pagination
     });
 
     const Spots = updatedSpot(spots);
-    return res.json({Spots});
+
+    // add pagination to the res body
+    const response = {
+        spots: Spots,
+        page,
+        size
+    }
+    return res.json(response);
 });
 /////////////////////////////////////////////////////////////////
 // create a spot

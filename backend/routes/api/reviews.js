@@ -33,7 +33,7 @@ router.get('/current', requireAuth, async (req, res) => {
         }
     })
 
-    // add previewImage to the spot
+    // add previewImage column to the spot
     // iterate the review and update it
     const addToReview =  Reviews.map(review => {
         const reviewJson = review.toJSON();
