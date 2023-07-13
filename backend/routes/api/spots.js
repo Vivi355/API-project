@@ -168,7 +168,7 @@ router.post('/:spotId/images', requireAuth, async(req, res) => {
     })
     const {id} = newImg; // get the id from the newly created img
 
-    return res.json({id, url, preview});
+    return res.status(201).json({id, url, preview});
 });
 
 ////////////////////////////////////////////////////
@@ -280,6 +280,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
 
       bookingJson.startDate = bookingJson.startDate.toISOString().slice(0, 10);
       bookingJson.endDate = bookingJson.endDate.toISOString().slice(0, 10);
+
       return bookingJson;
     });
 
@@ -349,11 +350,11 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async(req, res) =
         userId: newBooking.userId,
         startDate: newBooking.startDate.toISOString().slice(0,10),
         endDate: newBooking.endDate.toISOString().slice(0,10),
-        createdAt: newBooking.createdAt,
-        updatedAt: newBooking.updatedAt
+        createdAt: newBooking.createdAt.toISOString().slice(0,19).replace('T', ' '),
+        updatedAt: newBooking.updatedAt.toISOString().slice(0,19).replace('T', ' ')
     }
 
-    return res.json(response);
+    return res.status(201).json(response);
 })
 
 ///////////////////////////////////////////////////////////////
@@ -505,9 +506,24 @@ router.post('/', requireAuth, validateCreateSpot, async(req, res) => {
         price,
         // avgRating: 0,
         // previewImage: false
-    })
+    });
+    const response = {
+        id: newSpot.id,
+        ownerId: newSpot.ownerId,
+        address: newSpot.address,
+        city: newSpot.city,
+        state: newSpot.state,
+        country: newSpot.country,
+        lat: newSpot.lat,
+        lng: newSpot.lng,
+        name: newSpot.name,
+        description: newSpot.description,
+        price: newSpot.price,
+        createdAt: newSpot.createdAt.toISOString().slice(0, 19).replace('T', ' '),
+        updatedAt: newSpot.updatedAt.toISOString().slice(0,19).replace('T', ' ')
+    }
 
-    return res.status(201).json(newSpot);
+    return res.status(201).json(response);
 });
 
 ////////////////////////////////////////////////////////

@@ -92,7 +92,7 @@ router.post('/:reviewId/images', requireAuth, async(req, res) => {
     })
     const {id} = newReImg;
     // will return id and url only
-    return res.json({id, url});
+    return res.status(201).json({id, url});
 })
 
 ////////////////////////////////////////////////
