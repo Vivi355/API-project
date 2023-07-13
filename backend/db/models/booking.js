@@ -27,8 +27,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         isDate: true,
-        isBefore: '2023-12-30',
-        isAfter: '2023-07-10'
+        isBefore: '2024-12-30',
+        isAfter: '2023-05-10'
       }
     },
     endDate: {
@@ -36,8 +36,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         isDate: true,
-        isBefore: '2023-12-31',
-        isAfter: '2023-07-11',
+        isBefore: '2024-12-31',
+        isAfter: '2023-05-11',
         checkDate(value) {
           if (this.startDate > value) {
             throw new Error('endDate cannot come before startDate')
