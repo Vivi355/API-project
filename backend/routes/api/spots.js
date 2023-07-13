@@ -28,7 +28,7 @@ function updatedSpot(spots) {
       avgRating /= totalReview;
     }
 
-    spotData.avgRating = avgRating;
+    spotData.avgRating = avgRating.toFixed(2);
 
     // updating the preview to previewImage and set the url value
     let previewImage = null;
@@ -434,7 +434,7 @@ router.get('/:spotId', async(req, res) => {
         if (numReviews > 0) {
         avgStarRating /= numReviews;
         }
-        spot.setDataValue('avgStarRating', avgStarRating);
+        spot.setDataValue('avgStarRating', avgStarRating.toFixed(2));
 
         // Remove Reviews
         const Spots = spot.toJSON();
