@@ -133,6 +133,22 @@ const validateBooking = [
     handleValidationErrors
 ];
 
+///////////////////////////////////////////////////
+// get all spots owned by the Current user
+router.get('/current', requireAuth, async (req, res) => {
+    const ownerId = req.user.id;
+    const spots = await Spot.findAll({
+        include: [
+            {model: SpotImage},
+            {model: Review}
+        ],
+           where: {
+            ownerId: ownerId
+           }
+    })
+    const Spots = updatedSpot(spots);
+    return res.json({Spots});
+});
 
 /////////////////////////////////////////////////////////////
 // add an img to a spot based on id
@@ -427,22 +443,7 @@ router.get('/:spotId', async(req, res) => {
     }
 });
 
-///////////////////////////////////////////////////
-// get all spots owned by the Current user
-router.get('/current', requireAuth, async (req, res) => {
-    const ownerId = req.user.id;
-    const spots = await Spot.findAll({
-        include: [
-            {model: SpotImage},
-            {model: Review}
-        ],
-           where: {
-            ownerId: ownerId
-           }
-    })
-    const Spots = updatedSpot(spots);
-    return res.json({Spots});
-});
+
 
 //////////////////////////////////////////////
 // get all spots
