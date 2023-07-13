@@ -62,9 +62,12 @@ router.get('/current', requireAuth, async(req, res) => {
 
         spotData.previewImage = hasPreview ? previewImage : 'No preview image found!';
 
-        // format the startDate and endDate
+        // format the startDate and endDate, createdAt and updatedAt
         bookingJson.startDate = bookingJson.startDate.toISOString().slice(0, 10);
         bookingJson.endDate = bookingJson.endDate.toISOString().slice(0, 10);
+        bookingJson.createdAt = bookingJson.createdAt.toISOString().slice(0,19).replace('T', ' ');
+        bookingJson.updatedAt = bookingJson.updatedAt.toISOString().slice(0,19).replace('T', ' ');
+
 
         // return updated version of the booking
         return bookingJson;
@@ -130,8 +133,8 @@ router.put('/:bookingId', requireAuth, validateBooking, async(req, res) => {
         userId: booking.userId,
         startDate: booking.startDate.toISOString().slice(0, 10),
         endDate: booking.endDate.toISOString().slice(0, 10),
-        createdAt: booking.createdAt,
-        updatedAt: booking.updatedAt
+        createdAt: booking.createdAt.toISOString().slice(0,19).replace('T', ' '),
+        updatedAt: booking.updatedAt.toISOString().slice(0,19).replace('T', ' ')
     }
 
     await booking.save();
