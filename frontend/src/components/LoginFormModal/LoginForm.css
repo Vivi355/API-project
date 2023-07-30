@@ -1,0 +1,63 @@
+li {
+    cursor: pointer;
+}
+
+
+/* sign in form*/
+#modal-content {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    border-radius: 10px;
+    /* text-align: center; */
+}
+
+h1 {
+    text-align: center;
+}
+
+input {
+    width: 270px;
+    height: 20px;
+}
+
+form {
+    display: grid;
+    gap: 10px;
+    padding-bottom: 10px;
+    width: 300px;
+    text-align: center;
+}
+
+/* login button */
+.login-button {
+    display: flex;
+    justify-content: center;
+
+}
+
+.login-button > button {
+    border-radius: 0px;
+    width: 280px;
+    margin-right: 0px;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+    background-color: #FF385C;
+    color: white;
+
+    /* text-align: center; */
+}
+
+p {
+    color: #FF385C;
+}
+
+.login-button > button:disabled {
+    cursor: text;
+    background-color: white;
+    color: gray;
+}
+
+a {
+    color: #378296;
+    padding: 15px 0px;
+}

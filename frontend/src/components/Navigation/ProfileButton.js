@@ -4,11 +4,17 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import { Link } from "react-router-dom";
+import "./ProfileButton.css"
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+
+  // const openMenu = () => {
+  //   setShowMenu((prevShowMenu) => !prevShowMenu);
+  // };
 
   const openMenu = () => {
     if (showMenu) return;
@@ -48,12 +54,14 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
-            <li>
+            <div>Hello, {user.firstName}</div>
+            <div>{user.email}</div>
+            <div className="manager-spot-link">
+              <Link to="#">Manage Spots</Link>
+            </div>
+            <div className="logout-button">
               <button onClick={logout}>Log Out</button>
-            </li>
+            </div>
           </>
         ) : (
           <>

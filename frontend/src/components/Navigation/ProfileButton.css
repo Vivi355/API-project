@@ -1,0 +1,32 @@
+.profile-dropdown {
+    border: 1px solid lightgray;
+    margin-top: 5px;
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    row-gap: 5px;
+    position: absolute;
+    /* top: 100%; */
+    right: 12px;
+    z-index: 1;
+    background-color: white;
+
+}
+
+.logout-button > button {
+    justify-content: center;
+    margin-right: 0px;
+    font-size: 15px;
+    background-color: #FF385C;
+    color: white;
+}
+
+.profile-dropdown.hidden {
+    display: none;
+}
+
+.manager-spot-link > a {
+    text-decoration: none;
+    color: black;
+}
