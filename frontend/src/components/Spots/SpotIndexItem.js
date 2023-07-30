@@ -15,7 +15,10 @@ const SpotIndexItem = ({spot}) => {
 
                         <div className="spot-detail">
                             <div className="spot-city">{spot.city}, {spot.state}</div>
-                            <div className="spot-rating">{avgRating}</div>
+                            <div className="spot-rating">
+                                <i className="fa-solid fa-star"></i>
+                                {avgRating}
+                            </div>
                             <div className="price">${spot.price} night</div>
                         </div>
 

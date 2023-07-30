@@ -8,6 +8,7 @@ import { Switch, Route } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotIndex from "./components/Spots/SpotIndex";
+import SpotShow from "./components/Spots/SpotShow";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ function App() {
             <SignupFormPage /> */}
           {/* </Route> */}
           <Route exact path='/'component={SpotIndex} />
-
+          <Route path='/spots/:spotId' component={SpotShow}/>
         </Switch>
       )}
     </>

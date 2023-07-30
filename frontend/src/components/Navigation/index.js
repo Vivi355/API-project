@@ -14,7 +14,7 @@ function Navigation({ isLoaded }){
       <li className='logo'>
         <NavLink exact to="/">
           <div className='left-nav'>
-            <i class="fa-brands fa-airbnb fa-rotate-180 fa-2xl"></i>
+            <i className="fa-brands fa-airbnb fa-rotate-180 fa-2xl"></i>
             <div className='site-name'>
               staycali
             </div>
@@ -24,7 +24,6 @@ function Navigation({ isLoaded }){
       {isLoaded && (
         <div className='user-button'>
           <div>
-            {/* <i class="fa-solid fa-bars"></i> */}
             <ProfileButton user={sessionUser} />
           </div>
         </div>

@@ -9,7 +9,7 @@ const SpotIndex = () => {
     const dispatch = useDispatch();
 
     const allSpots = useSelector((state) => state.spots.allSpots);
-    console.log('spotIndex:', allSpots);
+    // console.log('spotIndex:', allSpots);
 
     useEffect(() => {
         dispatch(fetchSpots())
