@@ -15,7 +15,8 @@ const SpotIndex = () => {
         dispatch(fetchSpots())
     }, [dispatch]);
 
-    if (!allSpots) return null;
+    // if (!allSpots) return null;
+    if (Object.keys(allSpots).length === 0) return null;
 
     return (
         <section>

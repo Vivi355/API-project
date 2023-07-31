@@ -1,0 +1,74 @@
+#create-spot-form-container  {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0px;
+  padding: 0px;
+  /* width: 500px; */
+}
+
+#create-spot-form-container > form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Additional styles */
+  text-align: left;
+  gap: 0px;
+  /* width: 500px; */
+}
+
+#create-spot-form-container > form > div {
+  padding-bottom: 10px;
+}
+
+
+.title-form {
+  text-align: left;
+  width: 300px;
+  padding-bottom: 0px;
+  height: 100px;
+  /* display: flex;
+  flex-direction: column; */
+  /* align-items: ; */
+}
+
+h3, p {
+  text-align: left;
+  color: black;
+}
+
+.title-form > p {
+  color: black;
+  font-size: 30px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.error {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+.description-box, .price-section {
+  border-bottom: 2px solid lightgray;
+  border-top: 2px solid lightgray;
+}
+
+.urls-section {
+  border-bottom: 2px solid lightgray;
+  margin-bottom: 15px;
+}
+
+.urls-input {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.description-box > textarea {
+  width: 278px;
+  height: 70px;
+}

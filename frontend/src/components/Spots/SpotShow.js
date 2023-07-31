@@ -8,7 +8,7 @@ const SpotShow = () => {
     const dispatch = useDispatch();
     const {spotId} = useParams();
     const spot = useSelector(state => state.spots.singleSpot);
-    console.log('showSpot com:', spot);
+    // console.log('showSpot com:', spot);
 
     // const preSpotImg = spot.SpotImages?.filter(img => img.preview === true);
     const preSpotImg = spot.SpotImages?.find((img) => img.preview === true);
@@ -17,7 +17,7 @@ const SpotShow = () => {
         dispatch(spotDetailThunk(spotId));
     }, [dispatch, spotId]);
 
-    if (!spot) return null;
+    if (!spot || Object.keys(spot).length === 0) return null;
 
     return (
         <div id="single-spot-container">

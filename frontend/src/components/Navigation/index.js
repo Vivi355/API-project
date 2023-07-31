@@ -23,6 +23,9 @@ function Navigation({ isLoaded }){
       </li>
       {isLoaded && (
         <div className='user-button'>
+          {sessionUser &&
+            (<NavLink to='/spots/new'>Create a New Spot</NavLink>)
+          }
           <div>
             <ProfileButton user={sessionUser} />
           </div>

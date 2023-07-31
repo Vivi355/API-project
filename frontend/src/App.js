@@ -9,6 +9,9 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotIndex from "./components/Spots/SpotIndex";
 import SpotShow from "./components/Spots/SpotShow";
+// import SpotForm from "./components/Spots/SpotForm";
+import CreateSpotForm from "./components/Spots/CreateSpotForm";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +33,7 @@ function App() {
             <SignupFormPage /> */}
           {/* </Route> */}
           <Route exact path='/'component={SpotIndex} />
+          <Route path='/spots/new' component={CreateSpotForm} />
           <Route path='/spots/:spotId' component={SpotShow}/>
         </Switch>
       )}
