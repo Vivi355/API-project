@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
+import { useHistory } from "react-router-dom";
 import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
@@ -12,6 +13,7 @@ function ProfileButton({ user }) {
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
+  const history = useHistory();
   // const openMenu = () => {
   //   setShowMenu((prevShowMenu) => !prevShowMenu);
   // };
@@ -41,6 +43,9 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
+
+    // push to main
+    history.push('/');
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -57,7 +62,7 @@ function ProfileButton({ user }) {
             <div>Hello, {user.firstName}</div>
             <div>{user.email}</div>
             <div className="manager-spot-link">
-              <Link to="#">Manage Spots</Link>
+              <Link to="/spots/current" onClick={() => setShowMenu(false)}>Manage Spots</Link>
             </div>
             <div className="logout-button">
               <button onClick={logout}>Log Out</button>

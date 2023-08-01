@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./SpotForm.css";
 import { createSpotThunk } from "../../store/spots";
 
@@ -29,19 +29,19 @@ const SpotForm = ({spot, formType}) => {
 
     const [errors, setErrors] = useState({});
     const [formSubmitted, setFormSubitted] = useState(false)
-    // const sessionUser = useSelector(state => state.session.user)
+    const sessionUser = useSelector(state => state.session.user)
 
     // if (!spot) return null;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('handle submit function called');
+        // console.log('handle submit function called');
         setErrors({});
         setFormSubitted(true);
 
 
         // Validate the form data
-        console.log('Creating new Spot obj');
+        // console.log('Creating new Spot obj');
         const newSpot = {
           // ...spot,
           country,
@@ -53,9 +53,10 @@ const SpotForm = ({spot, formType}) => {
           description,
           name,
           price,
+          userId: sessionUser.id,
       };
 
-      console.log('creating image array');
+      // console.log('creating image array');
       const images = [
         { url: previewImage, preview: true },
         { url: img1, preview: false },
@@ -64,11 +65,11 @@ const SpotForm = ({spot, formType}) => {
         { url: img4, preview: false },
     ];
 
-      console.log('check form type', formType);
+      // console.log('check form type', formType);
       if (formType === 'Create a new Spot') {
-        console.log('before created spot thunk call ');
+        // console.log('before created spot thunk call ');
         const createdSpot = await dispatch(createSpotThunk(newSpot, images));
-        console.log('after create spot thunk call');
+        // console.log('after create spot thunk call');
         // spot = createdSpot;
         if ('errors' in createdSpot) {
           // There were errors, so update our state with these errors
@@ -76,7 +77,7 @@ const SpotForm = ({spot, formType}) => {
       } else {
           // No errors, so it must have been successful
           spot = createdSpot;
-          console.log('before history push');
+          // console.log('before history push');
           history.push(`/spots/${spot.id}`);
       }
   }

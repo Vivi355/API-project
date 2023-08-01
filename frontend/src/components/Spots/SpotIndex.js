@@ -16,7 +16,8 @@ const SpotIndex = () => {
     }, [dispatch]);
 
     // if (!allSpots) return null;
-    if (Object.keys(allSpots).length === 0) return null;
+    console.log('allspots', allSpots);
+    if (!allSpots || Object.keys(allSpots).length === 0) return null;
 
     return (
         <section>

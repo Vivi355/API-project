@@ -7,10 +7,12 @@ import { Switch, Route } from "react-router-dom";
 
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+
+// Routes
 import SpotIndex from "./components/Spots/SpotIndex";
 import SpotShow from "./components/Spots/SpotShow";
-// import SpotForm from "./components/Spots/SpotForm";
 import CreateSpotForm from "./components/Spots/CreateSpotForm";
+import UserSpots from "./components/Spots/UserSpots";
 
 
 function App() {
@@ -34,6 +36,7 @@ function App() {
           {/* </Route> */}
           <Route exact path='/'component={SpotIndex} />
           <Route path='/spots/new' component={CreateSpotForm} />
+          <Route path='/spots/current' component={UserSpots}/>
           <Route path='/spots/:spotId' component={SpotShow}/>
         </Switch>
       )}

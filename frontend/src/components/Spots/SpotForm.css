@@ -6,6 +6,7 @@
   min-height: 100vh;
   margin: 0px;
   padding: 0px;
+
   /* width: 500px; */
 }
 
@@ -17,6 +18,8 @@
   text-align: left;
   gap: 0px;
   /* width: 500px; */
+  border: 1px solid lightgray;
+  padding: 0px 80px;
 }
 
 #create-spot-form-container > form > div {

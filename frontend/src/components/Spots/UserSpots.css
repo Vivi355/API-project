@@ -1,0 +1,43 @@
+.spot-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+@media only screen and (min-width: 1024px) {
+    .spot-list {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+#manage-spots-page {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.title-box > a > button {
+    border-radius: 0%;
+    background-color: #FF385C;
+    color: white;
+    font-size: 12px;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+}
+
+.single-spot > button {
+    color: white;
+    background-color: #FF385C;
+    margin-top: 30px;
+    border-radius: 0;
+    font-size: 12px;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+}
+
+.spot-img {
+    margin-bottom: 10px;
+
+}
+
+.spot-city {
+    margin-bottom: 10px;
+}

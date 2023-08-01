@@ -54,6 +54,9 @@ const SpotShow = () => {
                     <div className="review-num">
                         {spot.numReviews} reviews
                     </div>
+                    <div className="reserve-button">
+                        <button>Reserve</button>
+                    </div>
                 </div>
             </div>
         </div>

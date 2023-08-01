@@ -3,9 +3,8 @@ import { csrfFetch } from "./csrf";
 // action types
 export const LOAD_SPOTS = 'spots/LOAD_SPOTS';
 export const RECEIVE_SPOT = 'spots/RECEIVE_SPOT';
-// export const CREATE_SPOT = 'spots/CREATE_SPOT'
-
 export const RECEIVE_SPOT_IMG = 'spots/RECEIVE_SPOT_IMG'
+export const SET_CURRENT_USER_SPOTS = 'spots/SET_CURRENT_USER_SPOT';
 
 /************ Action creators *************/
 const loadSpots = (spots) => ({
@@ -21,6 +20,11 @@ const receiveSpot = (spot) => ({
 const receiveSpotImg = (spotId, images) => ({
     type: RECEIVE_SPOT_IMG,
     spotId, images
+})
+
+const setCurrUserSpots = (spots) => ({
+    type: SET_CURRENT_USER_SPOTS,
+    spots
 })
 
 
@@ -78,6 +82,17 @@ export const createSpotThunk = (spot, images) => async (dispatch, getState) => {
     }
 }
 
+// current user spots
+export const loadCurrentUserSpot = () => async (dispatch, getState) => {
+    // console.log('before fetch', res);
+    const res = await csrfFetch('/api/spots/current');
+    if (res.ok) {
+        const {Spots: spots} = await res.json();
+        dispatch(setCurrUserSpots(spots));
+        // console.log('load spots', spots);
+    }
+}
+
 // display all spots
 export const fetchSpots = () => async dispatch => {
     const res = await csrfFetch('/api/spots');
@@ -116,11 +131,8 @@ const spotsReducer = (state = initialState, action) => {
             }
             }
             return newState
-        // case CREATE_SPOT:
-            // newState = {...state, singleSpot: {...state.singleSpot}, allSpots: {...state.allSpots}};
-            // newState.singleSpot = action.spot;
-            // newState.allSpots[action.spot.id] = action.spot;
-            // return newState
+        case SET_CURRENT_USER_SPOTS:
+            return {...newState, userSpots: action.spots}
         default:
             return state;
     }
