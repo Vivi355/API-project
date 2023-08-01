@@ -13,6 +13,7 @@ import SpotIndex from "./components/Spots/SpotIndex";
 import SpotShow from "./components/Spots/SpotShow";
 import CreateSpotForm from "./components/Spots/CreateSpotForm";
 import UserSpots from "./components/Spots/UserSpots";
+import EditSpotForm from "./components/Spots/EditSpotForm";
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route exact path='/'component={SpotIndex} />
           <Route path='/spots/new' component={CreateSpotForm} />
           <Route path='/spots/current' component={UserSpots}/>
+          <Route path='/spots/:spotId/edit' component={EditSpotForm} />
           <Route path='/spots/:spotId' component={SpotShow}/>
         </Switch>
       )}

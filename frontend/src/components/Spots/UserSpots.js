@@ -26,8 +26,12 @@ const UserSpots = () => {
                 {userSpots && userSpots.map((spot) =>
                     <div className="single-spot" key={spot.id}>
                         <SpotIndexItem spot={spot} />
-                        <button>Update</button>
-                        <button>Delete</button>
+                        <div className="update-delete-buttons">
+                            <Link to={`/spots/${spot.id}/edit`}>
+                                <button>Update</button>
+                            </Link>
+                            <button>Delete</button>
+                        </div>
                     </div>
                 )}
             </div>

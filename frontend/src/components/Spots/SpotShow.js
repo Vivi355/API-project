@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./SpotShow.css"
 import { spotDetailThunk } from "../../store/spots";
 
@@ -8,14 +8,19 @@ const SpotShow = () => {
     const dispatch = useDispatch();
     const {spotId} = useParams();
     const spot = useSelector(state => state.spots.singleSpot);
+
+    const [isLoading, setIsLoading] = useState(true);
     // console.log('showSpot com:', spot);
 
-    // const preSpotImg = spot.SpotImages?.filter(img => img.preview === true);
-    const preSpotImg = spot.SpotImages?.find((img) => img.preview === true);
+    // const preSpotImg = spot && spot.SpotImages?.filter(img => img.preview === true);
+    const preSpotImg = spot && spot.SpotImages?.find((img) => img.preview === true);
 
     useEffect(() => {
-        dispatch(spotDetailThunk(spotId));
+        dispatch(spotDetailThunk(spotId))
+            .then(() => setIsLoading(false));
     }, [dispatch, spotId]);
+
+    if (isLoading) return null;
 
     if (!spot || Object.keys(spot).length === 0) return null;
 
@@ -31,7 +36,7 @@ const SpotShow = () => {
             </div>
 
             <div className="single-spot-img">
-                <div>
+                <div className="images-section">
                 {preSpotImg && <img src={preSpotImg.url} alt="previewImage" />}
             </div>
 
@@ -55,7 +60,7 @@ const SpotShow = () => {
                         {spot.numReviews} reviews
                     </div>
                     <div className="reserve-button">
-                        <button>Reserve</button>
+                        <button onClick={() => alert('Feature coming soon')}>Reserve</button>
                     </div>
                 </div>
             </div>

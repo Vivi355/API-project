@@ -14,7 +14,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Additional styles */
   text-align: left;
   gap: 0px;
   /* width: 500px; */
@@ -74,4 +73,13 @@ h3, p {
 .description-box > textarea {
   width: 278px;
   height: 70px;
+}
+
+.create-spot-button > button {
+  border-radius: 0;
+  box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+  background-color: #FF385C;
+  color: white;
+  margin-bottom: 20px;
+  font-size: 15px;
 }
