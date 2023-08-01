@@ -1,17 +1,25 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useModal } from "../../context/Modal";
 import "./UserSpots.css"
 import { loadCurrentUserSpot } from "../../store/spots";
 import SpotIndexItem from "./SpotIndexItem";
+import DeleteSpotModal from "../DeleteSpotModal";
 
 const UserSpots = () => {
+    const {openModal} = useModal();
     const dispatch = useDispatch();
     const userSpots = useSelector(state => state.spots.userSpots);
 
     useEffect(() => {
         dispatch(loadCurrentUserSpot());
     }, [dispatch]);
+
+    // delete modal
+    const deleteClick = (spotId) => {
+        openModal(<DeleteSpotModal spotId={spotId} />);
+    }
 
     return (
         <div id="manage-spots-page">
@@ -30,7 +38,9 @@ const UserSpots = () => {
                             <Link to={`/spots/${spot.id}/edit`}>
                                 <button>Update</button>
                             </Link>
-                            <button>Delete</button>
+                            <button
+                                onClick={() => deleteClick(spot.id)}>Delete
+                            </button>
                         </div>
                     </div>
                 )}

@@ -168,6 +168,9 @@ const spotsReducer = (state = initialState, action) => {
             return newState;
         case RECEIVE_SPOT_IMG:
             newState = {...state};
+            if (!newState.allSpots) {
+                newState.allSpots = {}
+            }
             if (newState.allSpots[action.spotId]) {
                 newState.allSpots[action.spotId].SpotImages = action.images;
             } else {

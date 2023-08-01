@@ -11,6 +11,12 @@ export function ModalProvider({ children }) {
     // callback function that will be called when modal is closing
   const [onModalClose, setOnModalClose] = useState(null);
 
+  // open modal for delete spot button
+  const openModal = (content, onClose) => {
+    setModalContent(content);
+    setOnModalClose(() => onClose)
+  }
+
     // called to trigger the modal to be closed, shouls also call 'onModalClose'
     const closeModal = () => {
         setModalContent(null); // clear the modal contents
@@ -28,6 +34,7 @@ export function ModalProvider({ children }) {
         setModalContent, // function to set the React component to render inside modal
         setOnModalClose, // function to set the callback function to be called when modal is closing
         closeModal, // function to close the modal
+        openModal, // function to open the modal
       };
 
       return (

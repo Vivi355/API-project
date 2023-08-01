@@ -41,3 +41,21 @@
 .spot-city {
     margin-bottom: 10px;
 }
+
+.update-delete-buttons > button {
+    border-radius: 0%;
+    color: white;
+    background-color: #FF385C;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+.update-delete-buttons > a > button {
+    border-radius: 0%;
+    color: white;
+    background-color: #FF385C;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+    font-size: 12px;
+    margin-top: 20px;
+}
