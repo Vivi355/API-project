@@ -12,3 +12,11 @@
     background-color: #FF385C;
     color: white;
 }
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
