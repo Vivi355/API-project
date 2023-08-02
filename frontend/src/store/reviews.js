@@ -66,9 +66,10 @@ const reviewsReducer = (state = initialState, action) => {
             // console.log('new state in the reducer', newState);
             return newState;
         case CREATE_REVIEW:
-            newState = {...state};
-            newState[action.review.id] = action.reviews;
-            return newState;
+            return {
+                ...state,
+                [action.review.id]: action.review,
+              };
         default:
             return state;
     }
