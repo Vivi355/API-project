@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./SpotShow.css"
 import { spotDetailThunk } from "../../store/spots";
+import ReviewShow from "../Reviews/ReviewShow"; // reviews section
 
 const SpotShow = () => {
     const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const SpotShow = () => {
 
     // const preSpotImg = spot && spot.SpotImages?.filter(img => img.preview === true);
     const preSpotImg = spot && spot.SpotImages?.find((img) => img.preview === true);
+    const otherImages = spot && spot.SpotImages?.filter(img => img.preview === false);
 
     useEffect(() => {
         dispatch(spotDetailThunk(spotId))
@@ -37,8 +39,15 @@ const SpotShow = () => {
 
             <div className="single-spot-img">
                 <div className="images-section">
-                {preSpotImg && <img src={preSpotImg.url} alt="previewImage" />}
-            </div>
+                    <div className="big-img">
+                        {preSpotImg && <img src={preSpotImg.url} alt="previewImage" />}
+                    </div>
+                    <div className="small-images">
+                        {otherImages.map((img, idx) => (
+                            <img key={idx} src={img.url} alt={`SpotImage-${idx}`} />
+                        ))}
+                    </div>
+                </div>
 
             <div className="single-spot-detail-container">
                 <div className="bottom-left">
@@ -53,19 +62,28 @@ const SpotShow = () => {
                     <div className="price-tag">
                         ${spot.price} night
                     </div>
-                    <div className="star-rating">
-                        <i className="fa-solid fa-star"></i>{spot.avgStarRating}
-                    </div>
-                    <div className="review-num">
-                        {spot.numReviews} reviews
+                    <div className="review-star">
+                        <i className="fa-solid fa-star"></i>
+                        {spot.numReviews !== 0 && <> {spot.avgStarRating} <span>&#183;</span> </>}
+                        {spot.numReviews === 0 ? 'New' : `${spot.numReviews} ${spot.numReviews === 1 ? 'review' : 'reviews'}`}
                     </div>
                     <div className="reserve-button">
                         <button onClick={() => alert('Feature coming soon')}>Reserve</button>
                     </div>
                 </div>
+
+            </div>
+
+            <div id="reviews-section">
+                <div className="review-star">
+                    <i className="fa-solid fa-star"></i>
+                    {spot.numReviews !== 0 && <> {spot.avgStarRating} <span>&#183;</span></>}
+                    {spot.numReviews === 0 ? 'New' : `${spot.numReviews} ${spot.numReviews === 1 ? 'review' : 'reviews'}`}
+                </div>
+                <ReviewShow />
             </div>
         </div>
-        </div>
+     </div>
     )
 }
 

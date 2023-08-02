@@ -11,10 +11,41 @@ img {
 
 }
 
+
+
+.spot-name-and-location {
+    border: 2px solid red;
+}
+
+.images-section {
+    /* display: flex;
+    border: 2px solid green;
+    flex-wrap: wrap;
+    padding-bottom: 10px;
+    gap: 5px; */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 5px;
+    border: 2px solid green;
+    padding-bottom: 10px;
+}
+
+/* .big-img, .small-images {
+    border: 2px solid yellow;
+    flex: 1 0 50%;
+    max-width: 50%;
+} */
+
+/* .small-images {
+    border: 2px solid yellow;
+} */
+
+
 .single-spot-detail-container {
     display: flex;
     justify-content: space-between;
-    /* padding-top: 0; */
+    border-bottom: 2px solid black;
+    padding-bottom: 30px;
 }
 
 .bottom-right {
@@ -49,8 +80,4 @@ img {
 
 .price-tag {
     font-size: 20px;
-}
-
-.images-section {
-    padding-bottom: 10px;
 }
