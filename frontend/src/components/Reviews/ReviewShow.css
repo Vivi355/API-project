@@ -13,3 +13,13 @@
     font-size: 12px;
     padding: 5px;
 }
+
+.reviews-details > button {
+    border-radius: 0%;
+    background-color: #FF385C;
+    color: white;
+    font-size: 12px;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+    border: 2px solid black;
+    padding: 3px 6px;
+}
