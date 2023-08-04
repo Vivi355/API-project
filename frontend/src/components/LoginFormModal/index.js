@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 
-function LoginFormModal({}) {
+function LoginFormModal() {
   const dispatch = useDispatch();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
