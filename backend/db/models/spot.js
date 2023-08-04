@@ -34,12 +34,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false
     },
     address: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull:false,
       unique: true
     },
     city: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull:false
     },
     state: {
@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false
     },
     country: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull:false
     },
     lat: {
@@ -61,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
       unique: true
     },
     name: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull:false
     },
     description: {
