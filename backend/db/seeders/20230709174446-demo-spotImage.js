@@ -144,7 +144,7 @@ module.exports = {
 
       {
         spotId: 6,
-        url: 'https://cdn.discordapp.com/attachments/1134917911941742615/1137076486923358219/hutomo-abrianto-9mPl0Zo7_gQ-unsplash.jpg',
+        url: 'https://cdn.discordapp.com/attachments/1134917911941742615/1137076743560233010/alan-j-hendry-zVf-R-r3szw-unsplash.jpg',
         preview: true
       },
       {
@@ -154,7 +154,7 @@ module.exports = {
       },
       {
         spotId: 6,
-        url: 'https://cdn.discordapp.com/attachments/1134917911941742615/1137076743560233010/alan-j-hendry-zVf-R-r3szw-unsplash.jpg',
+        url: 'https://cdn.discordapp.com/attachments/1134917911941742615/1137077005293199370/marvin-meyer-cjhuXRtRT0Y-unsplash.jpg',
         preview: false
       },
       {
@@ -164,13 +164,13 @@ module.exports = {
       },
       {
         spotId: 6,
-        url: 'https://cdn.discordapp.com/attachments/1134917911941742615/1136782060862840892/patrick-perkins-3wylDrjxH-E-unsplash.jpg',
+        url: 'https://cdn.discordapp.com/attachments/1134917911941742615/1136782640603730043/francesca-tosolini-qnSTxcs0EEs-unsplash.jpg',
         preview: false
       },
 
       {
         spotId: 7,
-        url: 'https://cdn.discordapp.com/attachments/1134917911941742615/1137077473159422072/max-anderson-9-a7z7hTWzw-unsplash.jpg',
+        url: 'https://cdn.discordapp.com/attachments/1134917911941742615/1136783244986167447/olga-subach-SiRLWc8UE5Q-unsplash.jpg',
         preview: true
       },
       {
