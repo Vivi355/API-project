@@ -1,0 +1,50 @@
+#review-popup {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.fa-star {
+    color: black;
+}
+
+.filled {
+    color: black;
+}
+
+.review-box > textarea {
+    height: 100px;
+    width: 250px;
+    background-color: #E8F0FE;
+
+}
+
+.submit-review-button {
+    padding-left: 20px;
+}
+
+.submit-review-button > button {
+    border-radius: 0%;
+    color: white;
+    background-color: #FF385C;
+    box-shadow: 3px 3px 5px rgba(0,0,0,1);
+    width: 260px;
+    font-size: 14px;
+    border: 2px solid black;
+
+}
+
+.submit-review-button > button:disabled {
+    cursor: text;
+    background-color: white;
+    color: gray;
+}
+
+.review-box > .error {
+    text-align: center;
+}
+
+.stars > .error {
+    text-align: center;
+}

@@ -1,0 +1,35 @@
+.review-delete-popup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 300px;
+    /* text-align: center; */
+}
+
+.review-delete-popup > h1 {
+    margin-bottom: 0%;
+    padding-right: 20px;
+}
+
+.review-delete-popup >  button {
+    border-radius: 0%;
+    /* padding-bottom: 5px */
+}
+
+.delete-review {
+    background-color: #FF385C;
+    color: white;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+    margin-bottom: 10px;
+    border: 2px solid black;
+    font-size: 14px;
+}
+
+.keep-review {
+    background-color: darkgray;
+    color: white;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+    margin-bottom: 10px;
+    border: 2px solid black;
+    font-size: 14px;
+}

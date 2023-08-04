@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./SpotForm.css";
@@ -28,13 +28,34 @@ const SpotForm = ({spot, formType}) => {
 
 
     const [errors, setErrors] = useState({});
-    // const [formSubmitted, setFormSubitted] = useState(false)
     const sessionUser = useSelector(state => state.session.user)
 
+    const validateForm = useCallback(() => {
+      const errors = {};
+
+      if (!country || country.length < 3) errors.country = 'Country is required between 3 and 50 characters';
+        if (!address) errors.address = 'Address is required';
+        if (!city || city.length < 2) errors.city = 'City is required with min of 2 characters';
+        if (!state || state.length < 2) errors.state = 'State is required with min of 2 characters';
+        if (!lat || isNaN(lat) || lat < -90 || lat > 90) errors.lat = 'Latitude must a number between -90 and 90';
+        if (!lng || isNaN(lng) || lng < -180 || lng > 180) errors.lng = 'Longitude must be a number between -180 and 180';
+        if (!description || description.length < 30)
+          errors.description = 'Description needs a minimum of 30 characters';
+        if (!name || name.length < 3) errors.name = 'Name is required between 3 and 50 characters';
+        if (!price || isNaN(price)) errors.price = 'Price per day is required';
+
+        if (formType === 'Create a new Spot' && !previewImage) errors.previewImage = 'Preview Image is required';
+
+        if (img1 && !img1.endsWith('.png') && !img1.endsWith('.jpg') && !img1.endsWith('.jpeg')) {
+            errors.img1 = 'Image URL must end with .png, .jpg, or .jpeg';
+          }
+
+
+        return errors;
+    }, [country, address, city, state, lat, lng, description, name, price, previewImage, img1, formType]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // console.log('handle submit function called');
 
         // need form validation before submit, errors in the obj, return the errors
         let errors = validateForm();
@@ -43,7 +64,6 @@ const SpotForm = ({spot, formType}) => {
           return;
         }
 
-        // console.log('Creating new Spot obj');
         const newSpot = {
           // ...spot,
           country,
@@ -58,7 +78,6 @@ const SpotForm = ({spot, formType}) => {
           userId: sessionUser.id,
       };
 
-      // console.log('creating image array');
       const images = [
         { url: previewImage, preview: true },
         { url: img1, preview: false },
@@ -69,17 +88,10 @@ const SpotForm = ({spot, formType}) => {
 
       let updatedSpot;
       if (formType === 'Create a new Spot') {
-        // console.log('before created spot thunk call ');
         updatedSpot = await dispatch(createSpotThunk(newSpot, images));
-        // console.log('after create spot thunk call');
-        // spot = createdSpot;
         if (updatedSpot.errors) {
-          // There were errors, so update state with these errors
           setErrors(updatedSpot.errors);
         } else {
-          // No errors, so it must have been successful
-          // spot = createdSpot;
-          // console.log('before history push');
           history.push(`/spots/${updatedSpot.id}`);
         }
       } else if (formType === 'Update your Spot') {
@@ -92,34 +104,9 @@ const SpotForm = ({spot, formType}) => {
       }
 };
 
-      // Function to validate the form data (you can modify this based on your validation requirements)
-      function validateForm() {
-        const errors = {};
-
-        if (!country || country.length < 3) errors.country = 'Country is required between 3 and 50 characters';
-        if (!address) errors.address = 'Address is required';
-        if (!city || city.length < 2) errors.city = 'City is required with min of 2 characters';
-        if (!state || state.length < 2) errors.state = 'State is required with min of 2 characters';
-        if (!lat || isNaN(lat) || lat < -90 || lat > 90) errors.lat = 'Latitude must a number between -90 and 90';
-        if (!lng || isNaN(lng) || lng < -180 || lng > 180) errors.lng = 'Longitude must be a number between -180 and 180';
-        if (!description || description.length < 30)
-          errors.description = 'Description needs a minimum of 30 characters';
-        if (!name || name.length < 3) errors.name = 'Name is required between 3 and 50 characters';
-        if (!price || isNaN(price)) errors.price = 'Price per day is required';
-
-        if (!previewImage) errors.previewImage = 'Preview Image is required';
-
-        if (img1 && !img1.endsWith('.png') && !img1.endsWith('.jpg') && !img1.endsWith('.jpeg')) {
-            errors.img1 = 'Image URL must end with .png, .jpg, or .jpeg';
-          }
-
-
-        return errors;
-      };
-
       useEffect(() => {
         setErrors(validateForm());
-      }, [country, address, city, state, lat, lng, description, name, price, previewImage, img1])
+      }, [country, address, city, state, lat, lng, description, name, price, previewImage, img1, validateForm])
 
         return (
           <div id="create-spot-form-container">

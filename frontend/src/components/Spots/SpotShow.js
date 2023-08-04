@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./SpotShow.css"
 import { spotDetailThunk } from "../../store/spots";
+import ReviewShow from "../Reviews/ReviewShow"; // reviews section
 
 const SpotShow = () => {
     const dispatch = useDispatch();
@@ -10,15 +11,22 @@ const SpotShow = () => {
     const spot = useSelector(state => state.spots.singleSpot);
 
     const [isLoading, setIsLoading] = useState(true);
-    // console.log('showSpot com:', spot);
+
+    // keep track the review changing
+    const [reviewChange, setReviewChange] = useState(false);
 
     // const preSpotImg = spot && spot.SpotImages?.filter(img => img.preview === true);
     const preSpotImg = spot && spot.SpotImages?.find((img) => img.preview === true);
+    const otherImages = spot && spot.SpotImages?.filter(img => img.preview === false);
 
     useEffect(() => {
         dispatch(spotDetailThunk(spotId))
-            .then(() => setIsLoading(false));
-    }, [dispatch, spotId]);
+            .then(() => {
+                setIsLoading(false);
+                setReviewChange(false);
+            });
+    }, [dispatch, spotId, reviewChange]);
+
 
     if (isLoading) return null;
 
@@ -37,34 +45,50 @@ const SpotShow = () => {
 
             <div className="single-spot-img">
                 <div className="images-section">
-                {preSpotImg && <img src={preSpotImg.url} alt="previewImage" />}
-            </div>
+                    <div className="big-img">
+                        {preSpotImg && <img src={preSpotImg.url} alt="previewImage" />}
+                    </div>
+                    <div className="small-images">
+                        {otherImages && otherImages.length > 0 && otherImages.map((img, idx) => (
+                            <img key={idx} src={img.url} alt={`SpotImage-${idx}`} />
+                        ))}
+                    </div>
+                </div>
 
-            <div className="single-spot-detail-container">
-                <div className="bottom-left">
-                    <div className="spot-host">
-                        <h2>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</h2>
+                <div className="single-spot-detail-container">
+                    <div className="bottom-left">
+                        <div className="spot-host">
+                            <h2>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</h2>
+                        </div>
+                        <div className="spot-description">
+                            {spot.description}
+                        </div>
                     </div>
-                    <div className="spot-description">
-                        {spot.description}
+                    <div className="bottom-right">
+                        <div className="price-tag">
+                            <span className="bold-price">${spot.price}</span> night
+                        </div>
+                        <div className="review-star">
+                            <i className="fa-solid fa-star"></i>
+                            {spot.numReviews !== 0 && <> {spot.avgStarRating} <span>&#183;</span> </>}
+                            {spot.numReviews === 0 ? 'New' : `${spot.numReviews} ${spot.numReviews === 1 ? 'review' : 'reviews'}`}
+                        </div>
+
+                        <div className="reserve-button">
+                            <button onClick={() => alert('Feature coming soon')}>Reserve</button>
+                        </div>
                     </div>
                 </div>
-                <div className="bottom-right">
-                    <div className="price-tag">
-                        ${spot.price} night
+
+                <div id="reviews-section">
+                    <div className="review-star">
+                        <i className="fa-solid fa-star"></i>
+                        {spot.numReviews !== 0 && <> {spot.avgStarRating} <span>&#183;</span> </>}
+                        {spot.numReviews === 0 ? 'New' : `${spot.numReviews} ${spot.numReviews === 1 ? 'review' : 'reviews'}`}
                     </div>
-                    <div className="star-rating">
-                        <i className="fa-solid fa-star"></i>{spot.avgStarRating}
-                    </div>
-                    <div className="review-num">
-                        {spot.numReviews} reviews
-                    </div>
-                    <div className="reserve-button">
-                        <button onClick={() => alert('Feature coming soon')}>Reserve</button>
-                    </div>
+                    <ReviewShow setReviewChange={setReviewChange} />
                 </div>
             </div>
-        </div>
         </div>
     )
 }

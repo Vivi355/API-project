@@ -21,7 +21,7 @@ const SpotIndex = () => {
 
     return (
         <section>
-            <ul>
+            <ul className="main-page">
             {Object.values(allSpots).map(spot => (
                 <SpotIndexItem
                     spot={spot}

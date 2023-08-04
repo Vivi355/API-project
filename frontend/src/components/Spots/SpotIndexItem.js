@@ -20,7 +20,9 @@ const SpotIndexItem = ({spot}) => {
                             <i className="fa-solid fa-star"></i>
                             {avgRating}
                         </div>
-                        <div className="price">${spot.price} night</div>
+                        <div className="price">
+                        <span className="bold-price">${spot.price}</span> night
+                        </div>
                     </div>
 
                 </div>

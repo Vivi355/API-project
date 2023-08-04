@@ -22,7 +22,13 @@ const validateSignup = [
   check('username')
     .not()
     .isEmail()
-    .withMessage('Username cannot be an email.'),
+    .withMessage('Username cannot be an email.')
+    .custom(async (username) => {
+      const existingUser = await User.findOne({where: {username}});
+      if (existingUser) {
+        throw new Error('Username already taken');
+      }
+    }),
   check('firstName')
     .notEmpty()
     .withMessage('FirstName is required'),
