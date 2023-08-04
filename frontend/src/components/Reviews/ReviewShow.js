@@ -25,6 +25,7 @@ const ReviewShow = ({setReviewChange}) => {
         dispatch(fetchReviews(spotId))
     }, [dispatch, spotId])
 
+
     // modal popup
     const handleClick = () => {
         openModal(<CreateReview spotId={spotId} setReviewChange={setReviewChange} />)
@@ -40,19 +41,19 @@ const ReviewShow = ({setReviewChange}) => {
         <div>
             {/* only if the user is logged in and hasn't posted a review and is not the owner of the spot, .some() find truthy*/}
             <div className="post-review-button">
-                {user && !reviews.some(review => review.userId === user.id) && user.id !== spot.Owner.id && (
+                {user && !reviews.some(review => review.userId === user.id) && spot && spot.Owner && user.id !== spot.Owner.id && (
                     <button onClick={handleClick}>Post Your Review</button>
                 )}
             </div>
 
-            {reviews.length === 0 && user && user.id !== spot.Owner.id ?
+            {reviews.length === 0 && user && spot && spot.Owner && user.id !== spot.Owner.id ?
                 <p>Be the first to post a review!</p>
                 :
                 reviews.map(review => (
                     <div className="reviews-details" key={review.id}>
-                        <p>{review.User?.firstName}</p>
-                        <p>{new Date(review.createdAt).toLocaleDateString('en-US', {month: 'long', year: 'numeric'})}</p>
-                        <p>{review.review}</p>
+                        <p className="review-firstname">{review.User?.firstName}</p>
+                        <p className="review-date">{new Date(review.createdAt).toLocaleDateString('en-US', {month: 'long', year: 'numeric'})}</p>
+                        <p className="review-content">{review.review}</p>
                         {/* delete review button */}
                         {user && user.id === review.userId && (
                             <button onClick={() => handleDelete(review.id)}>Delete</button>

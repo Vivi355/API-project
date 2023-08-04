@@ -49,7 +49,7 @@ const SpotShow = () => {
                         {preSpotImg && <img src={preSpotImg.url} alt="previewImage" />}
                     </div>
                     <div className="small-images">
-                        {otherImages.map((img, idx) => (
+                        {otherImages && otherImages.length > 0 && otherImages.map((img, idx) => (
                             <img key={idx} src={img.url} alt={`SpotImage-${idx}`} />
                         ))}
                     </div>
@@ -66,7 +66,7 @@ const SpotShow = () => {
                     </div>
                     <div className="bottom-right">
                         <div className="price-tag">
-                            ${spot.price} night
+                            <span className="bold-price">${spot.price}</span> night
                         </div>
                         <div className="review-star">
                             <i className="fa-solid fa-star"></i>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createReviewThunk } from "../../store/reviews";
@@ -18,6 +18,14 @@ const CreateReview = ({spotId, setReviewChange}) => {
     const [selectedStars, setSelectedStars] = useState(0);
     const [hoverStars, setHoverStars] = useState(0);
 
+    const validateForm = useCallback(() => {
+        const errors = {};
+        if (review.length < 10) errors.review = 'Review is required 10 characters or more';
+        if (selectedStars < 1) errors.selectedStars = 'Stars must be between 1 and 5'
+
+        return errors;
+    }, [review, selectedStars]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -32,11 +40,6 @@ const CreateReview = ({spotId, setReviewChange}) => {
             stars: selectedStars,
         };
 
-        // try {
-
-        // } catch {
-
-        // }
         const createdReview = await dispatch(createReviewThunk(newReview, spotId));
         if (!createdReview.errors) {
             setReview('');
@@ -49,17 +52,9 @@ const CreateReview = ({spotId, setReviewChange}) => {
         }
     }
 
-    const validateForm = () => {
-        const errors = {};
-        if (review.length < 10) errors.review = 'Review is required 10 characters or more';
-        if (selectedStars < 1) errors.selectedStars = 'Stars must be between 1 and 5'
-
-        return errors;
-    }
-
     useEffect(() => {
         setErrors(validateForm());
-    }, [review, selectedStars]);
+    }, [review, selectedStars, validateForm]);
 
     return (
       <div id="review-popup">

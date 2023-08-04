@@ -10,9 +10,6 @@ const EditSpotForm = () => {
 
     const dispatch = useDispatch();
     const spot = useSelector(state => state.spots.singleSpot);
-    console.log(spot);
-    // const state = useSelector(state => state)
-    // console.log('state in editSpotForm', state);
 
     useEffect(() => {
         dispatch(spotDetailThunk(spotId));
