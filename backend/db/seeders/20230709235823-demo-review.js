@@ -32,8 +32,33 @@ module.exports = {
       {
         spotId: 3,
         userId: 3,
-        review: 'A perfect retreat from the hustle and bustle of city life. This cozy mountain cabin offered a stunning view of the mountains, clean and comfortable accommodation, and easy access to hiking trails. We had a fantastic time!',
-        stars: 3
+        review: "It was spacious, clean, and modern. The location couldn't have been better.!",
+        stars: 4
+      },
+
+      {
+        spotId: 4,
+        userId: 1,
+        review: 'We enjoyed our time here!',
+        stars: 4
+      },
+      {
+        spotId: 5,
+        userId: 2,
+        review: 'It was a really nice place to stay, and with family!',
+        stars: 5
+      },
+      {
+        spotId: 6,
+        userId: 1,
+        review: 'We had a fantastic time!',
+        stars: 5
+      },
+      {
+        spotId: 7,
+        userId: 2,
+        review: 'Very nice! Cozy and comfortable!',
+        stars: 5
       },
     ], { validate: true });
   },
@@ -42,7 +67,7 @@ module.exports = {
     options.tableName = 'Reviews';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      spotId: { [Op.in ]: [1, 2, 3]}
+      spotId: { [Op.in ]: [1, 2, 3, 4, 5, 6, 7]}
     }, {})
   }
 };
