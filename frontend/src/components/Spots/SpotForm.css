@@ -17,7 +17,7 @@
   text-align: left;
   gap: 0px;
   /* width: 500px; */
-  border: 1px solid lightgray;
+  /* border: 1px solid lightgray; */
   padding: 0px 80px;
 }
 
@@ -82,4 +82,20 @@ h3, p {
   color: white;
   margin-bottom: 20px;
   font-size: 15px;
+  border: 2px solid black;
 }
+
+textarea {
+  background-color: #E8F0FE;
+}
+
+/* .side-side {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+} */

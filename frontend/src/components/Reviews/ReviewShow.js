@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchReviews } from "../../store/reviews";
 import { useModal } from "../../context/Modal";
 import CreateReview from "./CreateReview"; // create
@@ -18,17 +18,24 @@ const ReviewShow = ({setReviewChange}) => {
 
     const {openModal} = useModal(); // consume context
 
+    // re render reviews
+    const [reviewCreated, setReviewCreated] = useState(false);
+
     // sort reviews
     reviews = reviews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
 
     useEffect(() => {
         dispatch(fetchReviews(spotId))
-    }, [dispatch, spotId])
+    }, [dispatch, spotId, reviewCreated])
 
 
     // modal popup
     const handleClick = () => {
-        openModal(<CreateReview spotId={spotId} setReviewChange={setReviewChange} />)
+        openModal(<CreateReview
+            spotId={spotId}
+            setReviewChange={setReviewChange}
+            setReviewCreated={setReviewCreated}
+        />)
     }
 
     // handle delete
