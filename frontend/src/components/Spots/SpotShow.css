@@ -1,5 +1,6 @@
 img {
     height: 300px;
+    row-gap: 5px
 }
 
 
@@ -10,10 +11,6 @@ img {
     margin: 0px auto;
 
 }
-
-/* .spot-name-and-location {
-    border: 2px solid red;
-} */
 
 .images-section {
     display: grid;
@@ -39,17 +36,6 @@ img {
     width: calc(50% - 5px);
     object-fit: cover;
 }
-
-/* .big-img, .small-images {
-    border: 2px solid yellow;
-    flex: 1 0 50%;
-    max-width: 50%;
-} */
-
-/* .small-images {
-    border: 2px solid yellow;
-} */
-
 
 .single-spot-detail-container {
     display: flex;
@@ -80,10 +66,6 @@ img {
     color: white;
     border: 2px solid black;
 }
-
-/* .bottom-left {
-    width: 300px;
-} */
 
 .spot-host {
     width: 300px;

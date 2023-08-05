@@ -9,18 +9,16 @@ const SpotIndex = () => {
     const dispatch = useDispatch();
 
     const allSpots = useSelector((state) => state.spots.allSpots);
-    // console.log('spotIndex:', allSpots);
 
     useEffect(() => {
         dispatch(fetchSpots())
     }, [dispatch]);
 
     // if (!allSpots) return null;
-    // console.log('allspots', allSpots);
     if (!allSpots || Object.keys(allSpots).length === 0) return null;
 
     return (
-        <section>
+        <div id="home-page">
             <ul className="main-page">
             {Object.values(allSpots).map(spot => (
                 <SpotIndexItem
@@ -29,7 +27,7 @@ const SpotIndex = () => {
                 />
              ))}
             </ul>
-        </section>
+        </div>
     )
 }
 
