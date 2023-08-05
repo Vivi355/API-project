@@ -35,8 +35,9 @@ const SpotForm = ({spot, formType}) => {
 
       if (!country || country.length < 3 || country.length > 50) errors.country = 'Country is required between 3 and 50 characters';
         if (!address || address.length > 50) errors.address = 'Address is required within 50 characters';
-        if (!city || city.length < 2 || city.length > 50) errors.city = 'City is required with min of 2 characters';
-        if (!state || state.length < 2 || state.length > 50) errors.state = 'State is required with min of 2 characters';
+        if (!city || city.length < 2 || city.length > 50) errors.city = 'City is required between 2 and 50 characters';
+
+        if (!state || state.length < 2 || state.length > 50) errors.state = 'State is required between 2 and 50 characters';
         if (!lat || isNaN(lat) || lat < -90 || lat > 90) errors.lat = 'Latitude must a number between -90 and 90';
         if (!lng || isNaN(lng) || lng < -180 || lng > 180) errors.lng = 'Longitude must be a number between -180 and 180';
         if (!description || description.length < 30 || description.length > 1000)
