@@ -17,7 +17,7 @@
   text-align: left;
   gap: 0px;
   /* width: 500px; */
-  border: 1px solid lightgray;
+  /* border: 1px solid lightgray; */
   padding: 0px 80px;
 }
 
@@ -71,8 +71,8 @@ h3, p {
 }
 
 .description-box > textarea {
-  width: 278px;
-  height: 70px;
+  width: 300px;
+  height: 90px;
 }
 
 .create-spot-button > button {
@@ -82,4 +82,37 @@ h3, p {
   color: white;
   margin-bottom: 20px;
   font-size: 15px;
+  border: 2px solid black;
+}
+
+textarea {
+  background-color: #E8F0FE;
+}
+
+#side-side {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.city-field, .state-field {
+  display: flex;
+  flex-direction: column;
+  width: 45%;  /* adjust as needed */
+}
+
+.city-field input, .state-field input {
+  width: 100%;
+}
+
+.comma {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 10%; /* adjust as needed */
+}
+
+input {
+  width: 100%;
 }

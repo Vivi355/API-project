@@ -31,6 +31,53 @@ function SignupFormModal() {
       return
     }
 
+    // check first name
+    if (!/^[a-zA-Z\s]+$/.test(firstName)) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        firstName: 'First name should only contain letters and spaces'
+      }))
+      return
+    } else if (firstName.length > 50) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        firstName: 'First name should be 50 characters or less'
+      }))
+      return
+    }
+
+    //check last name
+    if (!/^[a-zA-Z\s]+$/.test(lastName)) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        lastName: 'Last name should only contain letters and spaces'
+      }))
+      return
+    } else if (lastName.length > 50) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        lastName: 'Last name should be 50 characters or less'
+      }))
+      return
+    }
+
+    // check username
+    if (!/^[a-zA-Z0-9]{4,15}$/.test(username)) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        username: 'Username should be 4 to 15 characters long and can only contain alphanumeric characters'
+      }))
+      return
+    }
+
+    // check password length
+    // if (password.length < 6) {
+    //   setErrors(prevErrors => ({
+    //     ...prevErrors,
+    //     password: 'Password must be 6 characters or more'
+    //   }))
+    // }
+
     if (password === confirmPassword) {
       setErrors({});
       return dispatch(

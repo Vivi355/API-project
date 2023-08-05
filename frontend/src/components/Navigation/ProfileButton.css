@@ -30,3 +30,7 @@
     text-decoration: none;
     color: black;
 }
+
+.signin-logout > li {
+    list-style-type: none;
+}

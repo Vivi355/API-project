@@ -5,7 +5,7 @@ import { createReviewThunk } from "../../store/reviews";
 import { useModal } from "../../context/Modal";
 import "./CreateReview.css";
 
-const CreateReview = ({spotId, setReviewChange}) => {
+const CreateReview = ({spotId, setReviewChange, setReviewCreated}) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const [review, setReview] = useState('');
@@ -20,7 +20,7 @@ const CreateReview = ({spotId, setReviewChange}) => {
 
     const validateForm = useCallback(() => {
         const errors = {};
-        if (review.length < 10) errors.review = 'Review is required 10 characters or more';
+        if (review.length < 10 || review.length > 200) errors.review = 'Review is required 10 characters or more';
         if (selectedStars < 1) errors.selectedStars = 'Stars must be between 1 and 5'
 
         return errors;
@@ -46,6 +46,7 @@ const CreateReview = ({spotId, setReviewChange}) => {
             setSelectedStars(0);
             closeModal();
             setReviewChange(prev => !prev)
+            setReviewCreated(prev => !prev)
             history.push(`/spots/${spotId}`)
         } else {
             setErrors(createdReview);

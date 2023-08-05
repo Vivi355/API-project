@@ -33,26 +33,48 @@ const SpotForm = ({spot, formType}) => {
     const validateForm = useCallback(() => {
       const errors = {};
 
-      if (!country || country.length < 3) errors.country = 'Country is required between 3 and 50 characters';
-        if (!address) errors.address = 'Address is required';
-        if (!city || city.length < 2) errors.city = 'City is required with min of 2 characters';
-        if (!state || state.length < 2) errors.state = 'State is required with min of 2 characters';
+      if (!country || country.length < 3 || country.length > 50) errors.country = 'Country is required between 3 and 50 characters';
+        if (!address || address.length > 50) errors.address = 'Address is required within 50 characters';
+        if (!city || city.length < 2 || city.length > 50) errors.city = 'City is required with min of 2 characters';
+        if (!state || state.length < 2 || state.length > 50) errors.state = 'State is required with min of 2 characters';
         if (!lat || isNaN(lat) || lat < -90 || lat > 90) errors.lat = 'Latitude must a number between -90 and 90';
         if (!lng || isNaN(lng) || lng < -180 || lng > 180) errors.lng = 'Longitude must be a number between -180 and 180';
-        if (!description || description.length < 30)
+        if (!description || description.length < 30 || description.length > 1000)
           errors.description = 'Description needs a minimum of 30 characters';
-        if (!name || name.length < 3) errors.name = 'Name is required between 3 and 50 characters';
+        if (!name || name.length < 3 || name.length > 50) errors.name = 'Name is required between 3 and 50 characters';
         if (!price || isNaN(price)) errors.price = 'Price per day is required';
 
-        if (formType === 'Create a new Spot' && !previewImage) errors.previewImage = 'Preview Image is required';
+        if (formType === 'Create a New Spot') {
+          if (!previewImage) {
+            errors.previewImage = 'Preview Image is required'
+          } else {
+            try {
+              new URL(previewImage);
+            } catch(_) {
+              errors.previewImage = 'Invalid URL'
+            }
+          }
+        }
+        // if (formType === 'Create a new Spot' && !previewImage) errors.previewImage = 'Preview Image is required';
 
         if (img1 && !img1.endsWith('.png') && !img1.endsWith('.jpg') && !img1.endsWith('.jpeg')) {
             errors.img1 = 'Image URL must end with .png, .jpg, or .jpeg';
           }
 
+        if (img2 && !img2.endsWith('.png') && !img2.endsWith('.jpg') && !img2.endsWith('.jpeg')) {
+            errors.img2 = 'Image URL must end with .png, .jpg, or .jpeg';
+        }
+
+        if (img3 && !img3.endsWith('.png') && !img3.endsWith('.jpg') && !img3.endsWith('.jpeg')) {
+          errors.img3 = 'Image URL must end with .png, .jpg, or .jpeg';
+        }
+
+        if (img4 && !img4.endsWith('.png') && !img4.endsWith('.jpg') && !img4.endsWith('.jpeg')) {
+          errors.img4 = 'Image URL must end with .png, .jpg, or .jpeg';
+      }
 
         return errors;
-    }, [country, address, city, state, lat, lng, description, name, price, previewImage, img1, formType]);
+    }, [country, address, city, state, lat, lng, description, name, price, previewImage, img1, img2, img3, img4, formType]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -87,7 +109,7 @@ const SpotForm = ({spot, formType}) => {
     ];
 
       let updatedSpot;
-      if (formType === 'Create a new Spot') {
+      if (formType === 'Create a New Spot') {
         updatedSpot = await dispatch(createSpotThunk(newSpot, images));
         if (updatedSpot.errors) {
           setErrors(updatedSpot.errors);
@@ -141,7 +163,8 @@ const SpotForm = ({spot, formType}) => {
                   {errors.address && <p className="error">{errors.address}</p>}
                 </div>
 
-                <div className="side-side">
+                <div id="side-side">
+                  <div className="city-field">
                   City
                   <input
                     type="text"
@@ -151,6 +174,10 @@ const SpotForm = ({spot, formType}) => {
                     required
                   />
                   {errors.city && <p className="error">{errors.city}</p>}
+                  </div>
+                  <div className="comma"> , </div>
+
+                  <div className="state-field">
                   State
                   <input
                     type="text"
@@ -160,9 +187,12 @@ const SpotForm = ({spot, formType}) => {
                     required
                   />
                   {errors.state && <p className="error">{errors.state}</p>}
-                  </div>
+                </div>
+                </div>
 
                   {/* <div style={{display: 'flex', justifyContent: "space-be"}}> */}
+                <div id="side-side">
+                  <div className="">
                   Latitude
                   <input
                     type="number"
@@ -172,6 +202,9 @@ const SpotForm = ({spot, formType}) => {
                     required
                   />
                   {errors.lat && <p className="error">{errors.lat}</p>}
+                  </div>
+                  <div className="comma">,</div>
+                  <div>
                   Longitude
                   <input
                     type="number"
@@ -181,7 +214,8 @@ const SpotForm = ({spot, formType}) => {
                     required
                   />
                   {errors.lng && <p className="error">{errors.lng}</p>}
-
+                  </div>
+                </div>
 
               </div>
 
@@ -189,19 +223,17 @@ const SpotForm = ({spot, formType}) => {
                 <div>
                   <h3>Describe your place to guests</h3>
                   <p>
-            Mention the best features of your space, only special amenities
-            like fast wifi or parking, and what you love about the
-            neighborhood.
-          </p>
-        </div>
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description"
-          required
-        />
-        {errors.description && <p className="error">{errors.description}</p>}
-      </div>
+                  Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.
+                  </p>
+              </div>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Please write at least 30 characters"
+                required
+              />
+              {errors.description && <p className="error">{errors.description}</p>}
+            </div>
 
       <div className="spotName-section">
         <div>
@@ -270,6 +302,7 @@ const SpotForm = ({spot, formType}) => {
                 onChange={(e) => setImg2(e.target.value)}
                 placeholder="Image URL"
                 />
+                {errors.img2 && <p className="error">{errors.img2}</p>}
             </div>
             <div>
                 <input
@@ -279,6 +312,7 @@ const SpotForm = ({spot, formType}) => {
                 onChange={(e) => setImg3(e.target.value)}
                 placeholder="Image URL"
                 />
+                {errors.img3 && <p className="error">{errors.img3}</p>}
             </div>
             <div>
                 <input
@@ -288,6 +322,7 @@ const SpotForm = ({spot, formType}) => {
                 onChange={(e) => setImg4(e.target.value)}
                 placeholder="Image URL"
                 />
+                {errors.img4 && <p className="error">{errors.img4}</p>}
             </div>
           </div>
       </div>
