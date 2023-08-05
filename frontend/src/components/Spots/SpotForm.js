@@ -163,8 +163,8 @@ const SpotForm = ({spot, formType}) => {
                   {errors.address && <p className="error">{errors.address}</p>}
                 </div>
 
-                <div className="side-side">
-                  <div className="city-fields">
+                <div id="side-side">
+                  <div className="city-field">
                   City
                   <input
                     type="text"
@@ -175,8 +175,9 @@ const SpotForm = ({spot, formType}) => {
                   />
                   {errors.city && <p className="error">{errors.city}</p>}
                   </div>
+                  <div className="comma"> , </div>
 
-                  <div className="city-fields">
+                  <div className="state-field">
                   State
                   <input
                     type="text"
@@ -190,6 +191,8 @@ const SpotForm = ({spot, formType}) => {
                 </div>
 
                   {/* <div style={{display: 'flex', justifyContent: "space-be"}}> */}
+                <div id="side-side">
+                  <div className="">
                   Latitude
                   <input
                     type="number"
@@ -199,6 +202,9 @@ const SpotForm = ({spot, formType}) => {
                     required
                   />
                   {errors.lat && <p className="error">{errors.lat}</p>}
+                  </div>
+                  <div className="comma">,</div>
+                  <div>
                   Longitude
                   <input
                     type="number"
@@ -208,7 +214,8 @@ const SpotForm = ({spot, formType}) => {
                     required
                   />
                   {errors.lng && <p className="error">{errors.lng}</p>}
-
+                  </div>
+                </div>
 
               </div>
 
