@@ -40,7 +40,9 @@ function App() {
           <Route path='/spots/current' component={UserSpots}/>
           <Route path='/spots/:spotId/edit' component={EditSpotForm} />
           <Route path='/spots/:spotId' component={SpotShow}/>
-          <Route>Page not Found</Route>
+          <Route>
+            <h2>Page not Found</h2>
+          </Route>
         </Switch>
       )}
     </>
