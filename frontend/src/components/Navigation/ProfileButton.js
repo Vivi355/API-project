@@ -64,6 +64,9 @@ function ProfileButton({ user }) {
             <div className="manager-spot-link">
               <Link to="/spots/current" onClick={() => setShowMenu(false)}>Manage Spots</Link>
             </div>
+            <div className="manager-booking-link">
+              <Link to="/bookings/current" onClick={() => setShowMenu(false)}>Manage Bookings</Link>
+            </div>
             <div className="logout-button">
               <button onClick={logout}>Log Out</button>
             </div>

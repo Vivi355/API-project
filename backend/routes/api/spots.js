@@ -335,15 +335,6 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async(req, res) =
         endDate
     });
 
-    // change the format of the reponse body startDate and endDate (ex: 2023-10-19T00:00:00.00Z)
-    // const newStartDate = newBooking.startDate.toISOString().slice(0, 10);
-
-    // const newEndDate = newBooking.endDate.toISOString().slice(0, 10);;
-
-    // // reassign to the new one
-    // newBooking.startDate = newStartDate;
-    // newBooking.endDate = newEndDate;
-
     const response = {
         id: newBooking.id,
         spotId: newBooking.spotId,

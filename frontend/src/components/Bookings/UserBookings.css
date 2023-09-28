@@ -1,0 +1,56 @@
+#manage-bookings-page {
+    padding: 20px;
+    width: 900px;
+    margin: 0 auto;
+}
+
+.booking-list {
+    width: 100%;
+}
+
+.booking-entry {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    padding: 10px;
+    width: 900px;
+    margin: 0 auto;
+}
+
+.left-spot {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 20px;
+}
+
+.left-spot img {
+    width: 230px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.left-spot a {
+    text-decoration: none;
+    color: black;
+}
+
+.bAdd {
+    padding: 10px 0;
+}
+
+.booking-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-right: 30px;
+    gap: 10px;
+    padding-top: 50px;
+}
+
+.b-delete {
+    padding-top: 50px;
+}
