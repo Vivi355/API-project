@@ -55,6 +55,20 @@ export const addBooking= (booking) => async(dispatch) => {
     }
 }
 
+// delete booking
+export const removeBooking = (bookingId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/bookings/${bookingId}`, {
+        method: "DELETE",
+    })
+
+    if (res.ok) {
+        dispatch(deleteBooking(bookingId));
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+}
+
 /***************** Reducer ******************/
 const initialState = {bookings: {}};
 const bookingsReducer = (state = initialState, action) => {
@@ -70,7 +84,18 @@ const bookingsReducer = (state = initialState, action) => {
         case CREATE_BOOKING:
             newState = {...state};
             newState.bookings = {...newState.bookings, [action.booking.id]: action.booking};
-            return newState
+            return newState;
+
+        case REMOVE_BOOKING:
+            console.log('Booking Id to remove:', action.bookingId);
+            console.log('State before removal:', state);
+            newState = {...state};
+            // delete newState[action.bookingId];
+            if (newState.bookings) {
+                delete newState.bookings[action.bookingId];
+            }
+            console.log('State after removal:', newState);
+            return newState;
         default:
             return state
     }
