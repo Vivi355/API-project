@@ -136,39 +136,44 @@ const SpotShow = () => {
                         </div>
                     </div>
                     <div className="bottom-right">
-                        <div className="price-tag">
-                            <span className="bold-price">${spot.price}</span> night
-                        </div>
-                        <div className="review-star">
-                            <i className="fa-solid fa-star"></i>
-                            {spot.numReviews !== 0 && <> {spot.avgStarRating} <span>&#183;</span> </>}
-                            {spot.numReviews === 0 ? 'New' : `${spot.numReviews} ${spot.numReviews === 1 ? 'review' : 'reviews'}`}
+                        <div className="rs">
+                            <div className="price-tag">
+                                <span className="bold-price">${spot.price}</span> night
+                            </div>
+                            <div className="review-star">
+                                <i className="fa-solid fa-star"></i>
+                                {spot.numReviews !== 0 && <> {spot.avgStarRating} <span>&#183;</span> </>}
+                                {spot.numReviews === 0 ? 'New' : `${spot.numReviews} ${spot.numReviews === 1 ? 'review' : 'reviews'}`}
+                            </div>
                         </div>
 
                         <div className="reserve-button">
-                        <div className="date-picker">
-                            <label>Start Date:</label>
-                            <DatePicker
-                                selected={startDate}
-                                onChange={(date) => setStartDate(date)}
-                                selectsStart
-                                startDate={startDate}
-                                endDate={endDate}
-                                excludeDates={bookedDates}
-                            />
-                        </div>
-                        <div className="date-picker">
-                            <label>End Date:</label>
-                            <DatePicker
-                                selected={endDate}
-                                onChange={(date) => setEndDate(date)}
-                                selectsEnd
-                                endDate={endDate}
-                                minDate={startDate}
-                                excludeDates={bookedDates}
-                            />
-                        </div>
-                            <button onClick={handleReserve}>Reserve</button>
+                            <div className="date-pickers-container">
+
+                                <div className="date-picker">
+                                    <label>Start Date:</label>
+                                    <DatePicker
+                                        selected={startDate}
+                                        onChange={(date) => setStartDate(date)}
+                                        selectsStart
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        excludeDates={bookedDates}
+                                    />
+                                </div>
+                                <div className="date-picker">
+                                    <label>End Date:</label>
+                                    <DatePicker
+                                        selected={endDate}
+                                        onChange={(date) => setEndDate(date)}
+                                        selectsEnd
+                                        endDate={endDate}
+                                        minDate={startDate}
+                                        excludeDates={bookedDates}
+                                    />
+                                </div>
+                            </div>
+                            <button className="reverse-btn" onClick={handleReserve}>Reserve</button>
                         </div>
                     </div>
                 </div>

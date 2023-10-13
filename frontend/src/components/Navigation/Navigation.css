@@ -21,6 +21,7 @@ button {
     border-bottom: 1px solid lightgray;
     padding-bottom: 10px;
     justify-content: space-between;
+    font-family: 'Circular Std', Arial, sans-serif;
 }
 
 .logo {

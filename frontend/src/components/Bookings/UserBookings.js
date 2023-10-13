@@ -37,7 +37,7 @@ const UserBookings = () => {
                 <h2>Manage Bookings</h2>
             </div>
             <div className="booking-list">
-                {bookingsArray.map(booking => (
+                {bookingsArray.reverse().map(booking => (
                     <div key={booking.id} className="booking-entry">
                         <div className="left-spot">
                             <NavLink to={`/spots/${booking.Spot?.id}`}>

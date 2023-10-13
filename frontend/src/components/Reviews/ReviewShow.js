@@ -45,7 +45,7 @@ const ReviewShow = ({setReviewChange}) => {
 
 
     return (
-        <div>
+        <div className="review-container">
             {/* only if the user is logged in and hasn't posted a review and is not the owner of the spot, .some() find truthy*/}
             <div className="post-review-button">
                 {user && !reviews.some(review => review.userId === user.id) && spot && spot.Owner && user.id !== spot.Owner.id && (

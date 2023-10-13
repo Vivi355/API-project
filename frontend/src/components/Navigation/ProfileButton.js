@@ -58,9 +58,9 @@ function ProfileButton({ user }) {
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
+          <div className="drop-items">
             <div>Hello, {user.firstName}</div>
-            <div>{user.email}</div>
+            <div className="useremail">{user.email}</div>
             <div className="manager-spot-link">
               <Link to="/spots/current" onClick={() => setShowMenu(false)}>Manage Spots</Link>
             </div>
@@ -70,7 +70,7 @@ function ProfileButton({ user }) {
             <div className="logout-button">
               <button onClick={logout}>Log Out</button>
             </div>
-          </>
+          </div>
         ) : (
           <div className="signin-logout">
             <OpenModalMenuItem
