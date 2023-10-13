@@ -1,4 +1,4 @@
-import { csrfFetch } from "./csrf";;
+import { csrfFetch } from "./csrf";
 
 // action types
 export const RECEIVE_SPOT_REVIEWS = 'reviews/RECEIVE_SPOT_REVIEWS';

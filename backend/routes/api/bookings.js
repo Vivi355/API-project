@@ -4,7 +4,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { Op } = require('sequelize');
 
-const {Booking, User, Spot} = require('../../db/models')
+const {Booking, User, Spot, SpotImage} = require('../../db/models')
 
 const router = express.Router();
 
@@ -34,7 +34,10 @@ router.get('/current', requireAuth, async(req, res) => {
     const userId = req.user.id;
     const Bookings = await Booking.findAll({
         include: [
-            {model: Spot, attributes:['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price']}
+            {
+                model: Spot, attributes:['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
+                include: [{ model: SpotImage, attributes: ['url', 'preview'] }]
+            }
         ],
         where: {
             userId: userId
@@ -45,8 +48,9 @@ router.get('/current', requireAuth, async(req, res) => {
     // iterate the review and update it
     const addToBooking =  Bookings.map(booking => {
         const bookingJson = booking.toJSON();
-
+        // console.log('bookingJson:', bookingJson);
         const spotData = bookingJson.Spot; // refer to spot
+        // console.log('spotData:', spotData);
         let previewImage = null;
         let hasPreview = false;
 

@@ -11,7 +11,14 @@
     right: 12px;
     z-index: 1;
     background-color: white;
+    border-radius: 5px;
 
+}
+
+.drop-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .logout-button > button {
@@ -22,15 +29,22 @@
     color: white;
 }
 
+.useremail {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 3px;
+}
+
 .profile-dropdown.hidden {
     display: none;
 }
 
-.manager-spot-link > a {
+.manager-spot-link > a, .manager-booking-link > a {
     text-decoration: none;
     color: black;
+
 }
 
 .signin-logout > li {
     list-style-type: none;
+
 }
